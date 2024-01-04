@@ -10,10 +10,14 @@ load_dotenv()
 
 
 def convert_to_deeplake_vdb(args):
+    """Convert txt data to vector store.
+
+    Apply recursive character text splitter to split text into smaller chunks.
+    """
     filepath = Path(args.csv_file)
     filename = filepath.stem
 
-    dataset_path = f'./{args.dataset_output_dir}/{filename}'
+    dataset_path = f'./{args.dataset_output_dir}/{filename}_{args.max_docs_length}_docs_{args.chunk_size}_chunk'
 
     embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
     db = DeepLake(dataset_path=dataset_path, embedding=embeddings, num_workers=4)
@@ -30,15 +34,15 @@ def convert_to_deeplake_vdb(args):
         # add documents to our Deep Lake dataset
         db.add_texts(docs[:args.max_docs_length])
     else:
-        print('Dataset is not empty.')
+        print('Dataset is not empty and already exists.')
 
 
 def get_parsers():
-    parser = argparse.ArgumentParser(description='Convert csv to Deep Lake VectorDB.')
+    parser = argparse.ArgumentParser(description='Convert txt to Deep Lake VectorDB.')
     parser.add_argument('--dataset_output_dir', type=str, default='deeplake/',
                         help='Dataset output directory.')
-    parser.add_argument('--csv_file', required=True,
-                        help='Path to csv file.')
+    parser.add_argument('--txt_file', required=True,
+                        help='Path to txt file.')
     parser.add_argument('--chunk_size', type=int, default=350,
                         help='Text splitter chunk size.')
     parser.add_argument('--max_docs_length', type=int, default=20000,

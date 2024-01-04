@@ -43,9 +43,9 @@ def get_parsers():
                         help='Dataset output directory.')
     parser.add_argument('--txt_file', required=True,
                         help='Path to txt file.')
-    parser.add_argument('--chunk_size', type=int, default=350,
+    parser.add_argument('--chunk_size', type=int, default=1000,
                         help='Text splitter chunk size.')
-    parser.add_argument('--max_docs_length', type=int, default=20000,
+    parser.add_argument('--max_docs_length', type=int, default=50000,
                         help='Maximum number data to store after chunking in datalake.')
 
     return parser.parse_args()

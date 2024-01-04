@@ -1,3 +1,8 @@
+"""Inspired by:
+
+Source: https://medium.com/streamlit/how-to-build-an-llm-powered-chatbot-with-streamlit-a1bf0b2701e8
+Source: https://medium.com/@m.nusret.ozates/unleashing-the-future-of-ai-powered-qa-chatbots-streamlit-langchain-retrieval-qa-chatgpt-53c0dd8876ed
+"""
 import os
 
 import streamlit as st
@@ -13,6 +18,7 @@ st.set_page_config(page_title='HugChat - An LLM-powered Streamlit app')
 
 
 def initialize_chat(st):
+    """Initialize chat session."""
     if 'messages' not in st.session_state:
         st.session_state['messages'] = [
             {'role': 'assistant', 'content': 'How can I help you?'}
@@ -46,6 +52,7 @@ with st.sidebar:
     st.write('Made with ❤️ by [Data Professor](<https://youtube.com/dataprofessor>)')
 
 try:
+    # Initialize assistance bot and stop if there is an error.
     bot = initialize_bot(dataset_path=st.session_state.dataset_path)
 except Exception as ex:
     st.error(ex)

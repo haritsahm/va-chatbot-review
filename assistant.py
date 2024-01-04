@@ -37,9 +37,9 @@ class AssistantBot:
         db = DeepLakeVS(dataset_path=dataset_path, embedding=embeddings, num_workers=4, read_only=True)
         self._retriever = db.as_retriever()
         self._retriever.search_kwargs['distance_metric'] = 'cos'
-        self._retriever.search_kwargs['fetch_k'] = 10
+        self._retriever.search_kwargs['fetch_k'] = 25
         self._retriever.search_kwargs['maximal_marginal_relevance'] = True
-        self._retriever.search_kwargs['k'] = 5
+        self._retriever.search_kwargs['k'] = 15
 
     def update_retriever(self, dataset_path: str) -> bool:
         try:

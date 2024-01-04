@@ -14,7 +14,7 @@ from assistant import initialize_bot
 load_dotenv()
 
 
-st.set_page_config(page_title='HugChat - An LLM-powered Streamlit app')
+st.set_page_config(page_title='VA Chatbot - An LLM-powered Streamlit app')
 
 
 def initialize_chat(st):
@@ -35,10 +35,9 @@ with st.sidebar:
     ## About
     This app is an LLM-powered chatbot built using:
     - [Streamlit](<https://streamlit.io/>)
-    - [HugChat](<https://github.com/Soulter/hugging-chat-api>)
-    - [OpenAssistant/oasst-sft-6-llama-30b-xor](<https://huggingface.co/OpenAssistant/oasst-sft-6-llama-30b-xor>) LLM model
-
-    💡 Note: No API key required!
+    - [LangChain](<https://github.com/langchain-ai/langchain>)
+    - [Deep Lake](<https://github.com/activeloopai/deeplake>)
+    - [OpenAI API](<https://openai.com/blog/openai-api>)
     ''')
 
     dataset_path = st.selectbox(

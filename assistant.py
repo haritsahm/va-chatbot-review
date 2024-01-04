@@ -1,7 +1,6 @@
 import logging
 from typing import Any
 
-import deeplake
 import streamlit as st
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chains.base import Chain
@@ -12,6 +11,7 @@ from langchain.memory.chat_memory import BaseChatMemory
 from langchain.vectorstores import DeepLake as DeepLakeVS
 from langchain.vectorstores.base import VectorStoreRetriever
 
+import deeplake
 from prompt_templates import ASSISTANT_PROMPT_1
 
 
@@ -57,9 +57,9 @@ class AssistantBot:
 
         self._retriever = db.as_retriever()
         self._retriever.search_kwargs['distance_metric'] = 'cos'
-        self._retriever.search_kwargs['fetch_k'] = 25
+        self._retriever.search_kwargs['fetch_k'] = 5
         self._retriever.search_kwargs['maximal_marginal_relevance'] = True
-        self._retriever.search_kwargs['k'] = 15
+        self._retriever.search_kwargs['k'] = 5
 
     def update_retriever(self, dataset_path: str) -> bool:
         """Update the current vector store with a new vector store.

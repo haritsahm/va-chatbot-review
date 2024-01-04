@@ -1,10 +1,14 @@
 # Virtual Assistance for Product Review
 
-<p align="center">
-    <img src="figures/streamlit-app.png" alt="app-sample-streamlit" width="500"/>
+<p align=center>
+    <a href="https://youtu.be/KpJRGi1W6fI">
+        <img src="figures/streamlit-app.png" alt="app-sample-streamlit" width="500"/>
+    </a>
 </p>
 
 This project is a self-exploratory endeavor aimed at building a Chatbot utilizing [LangChain](https://www.langchain.com/), [OpenAI](https://openai.com/) services, and the [Deep Lake Vector Store](https://www.deeplake.ai/). The primary objective is to analyze Spotify application reviews sourced from a [Kaggle](https://www.kaggle.com/) dataset. The Chatbot, or virtual assistant, will employ the RAG (Retrieval-Augmented Generation) method to provide insightful and relevant responses to user inquiries related to the Spotify application.
+
+The youtube example is available in [here](https://youtu.be/KpJRGi1W6fI).
 
 ## Dataset
 

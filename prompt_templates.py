@@ -7,6 +7,9 @@ and simply say that you don't know to the answer because it is irrelevant with t
 
 {context}
 
+This was our previous chat history:
+{chat_history}
+
 Question: {question}
 
 Answer:

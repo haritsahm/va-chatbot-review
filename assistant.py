@@ -53,6 +53,7 @@ class AssistantBot:
         self._memory = ConversationBufferWindowMemory(
             memory_key='chat_history',
             k=5,
+            input_key='question',
             output_key='answer',
             return_messages=True)
 

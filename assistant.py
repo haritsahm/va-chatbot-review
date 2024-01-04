@@ -1,23 +1,21 @@
+import logging
 from typing import Any
 
-import deeplake
 import streamlit as st
-
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import DeepLake as DeepLakeVS
-from langchain.vectorstores.base import VectorStoreRetriever
-from langchain.chains.base import Chain
 from langchain.chains import ConversationalRetrievalChain
+from langchain.chains.base import Chain
+from langchain.chat_models import ChatOpenAI
+from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.memory.chat_memory import BaseChatMemory
-from langchain.chat_models import ChatOpenAI
+from langchain.vectorstores import DeepLake as DeepLakeVS
+from langchain.vectorstores.base import VectorStoreRetriever
 
-import logging
-
+import deeplake
 from prompt_templates import ASSISTANT_PROMPT_1
 
 
-class AssistantBot(object):
+class AssistantBot:
     def __init__(self, dataset_path: str) -> None:
         pass
 
@@ -32,9 +30,9 @@ class AssistantBot(object):
 
     def initialize_retriever(self, dataset_path: str) -> None:
         if not deeplake.exists(dataset_path):
-            raise RuntimeError(f"Path to {dataset_path} is not valid")
+            raise RuntimeError(f'Path to {dataset_path} is not valid')
 
-        embeddings = OpenAIEmbeddings(model="text-embedding-ada-002")
+        embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
 
         db = DeepLakeVS(dataset_path=dataset_path, embedding=embeddings, num_workers=4, read_only=True)
         self._retriever = db.as_retriever()
@@ -53,7 +51,7 @@ class AssistantBot(object):
 
     def initialize_memory(self) -> None:
         self._memory = ConversationBufferWindowMemory(
-            memory_key="chat_history",
+            memory_key='chat_history',
             k=5,
             output_key='answer',
             return_messages=True)
@@ -65,7 +63,7 @@ class AssistantBot(object):
         try:
             self._chain = ConversationalRetrievalChain.from_llm(
                 llm=ChatOpenAI(model='gpt-3.5-turbo-1106', temperature=0),
-                chain_type="stuff",
+                chain_type='stuff',
                 memory=self._memory,
                 retriever=self._retriever,
                 combine_docs_chain_kwargs={
@@ -81,6 +79,7 @@ class AssistantBot(object):
 
     def process(self, *args: Any, **kwds: Any) -> Any:
         return self._chain.run(*args, **kwds)
+
 
 @st.cache_resource
 def initialize_bot(dataset_path):

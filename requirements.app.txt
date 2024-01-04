@@ -1,0 +1,7 @@
+langchain==0.0.353
+deeplake==3.8.13
+tiktoken==0.5.2
+python-dotenv
+streamlit
+openai
+streamlit-extras

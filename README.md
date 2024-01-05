@@ -16,6 +16,11 @@ This project is using the dataset from [Kaggle Dataset: 3.4 Million Spotify Goog
 
 ## Setup
 
+### Hardware Requirements:
+
+- Minimum memory size: 8Gb
+- Minimum vCPU cores: 4
+
 ### 1. Install Requirements
 
 ```

@@ -32,14 +32,15 @@ pip install -r requirements.app.txt
 Create a `.env` file and add the following keys
 
 ```
-ACTIVELOOP_TOKEN=your_activeloop_token
 OPENAI_API_KEY=your_openai_key
+[Optional] ACTIVELOOP_TOKEN=your_activeloop_token
 ```
 
 If you don't have the account, please register to the following websites:
 
 - [OpenAI-API](https://platform.openai.com/docs/overview)
-- [Activeloop Deep Lake](https://app.activeloop.ai/)
+
+Note that if you're planning to store Deep Lake Vector Store in Activeloop Cloud / Hub, then you must provide the `ACTIVELOOP_TOKEN` by registerin to their [website](https://app.activeloop.ai/). Otherwise, because we're using it locally then there is no need to use the token.
 
 Sign in or register to [Kaggle](kaggle.com) and follow the instruction to setup the `kaggle.json` file.
 

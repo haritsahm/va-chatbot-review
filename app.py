@@ -16,6 +16,8 @@ load_dotenv()
 
 st.set_page_config(page_title='VA Chatbot - An LLM-powered Streamlit app')
 
+BOT = None
+
 
 def initialize_chat(st):
     """Initialize chat session."""
@@ -25,6 +27,17 @@ def initialize_chat(st):
         ]
     for index, msg in enumerate(st.session_state.messages):
         st.chat_message(msg['role']).write(msg['content'])
+
+
+def initialize_assistant():
+    try:
+        # Initialize assistance bot and stop if there is an error.
+        global BOT
+        dataset_path = os.path.join('deeplake', st.session_state.dataset_path)
+        BOT = initialize_bot(dataset_path=dataset_path)
+    except Exception as ex:
+        st.error(ex)
+        BOT = None
 
 
 st.title('💬 Virtual Assistance Chatbot')
@@ -42,19 +55,18 @@ with st.sidebar:
 
     dataset_path = st.selectbox(
         label='Which database do you want to use?',
-        options=os.listdir('deeplake/')
+        options=os.listdir('deeplake/'),
+        on_change=initialize_assistant,
+        key='dataset_path'
     )
-    if 'dataset_path' not in st.session_state:
-        st.session_state.dataset_path = os.path.join('deeplake', dataset_path)
 
     add_vertical_space(5)
     st.write('Made with ❤️ by [Data Professor](<https://youtube.com/dataprofessor>)')
 
-try:
-    # Initialize assistance bot and stop if there is an error.
-    bot = initialize_bot(dataset_path=st.session_state.dataset_path)
-except Exception as ex:
-    st.error(ex)
+initialize_assistant()
+
+# Stop process if bot is not valid
+if BOT is None:
     st.stop()
 
 initialize_chat(st)
@@ -65,7 +77,7 @@ if question := st.chat_input():
     st.chat_message('user').write(question)
 
     # Get an answer using question and the conversation history
-    answer: str = bot.process(
+    answer: str = BOT.process(
         {
             'question': question,
         }

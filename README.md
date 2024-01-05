@@ -14,6 +14,8 @@ The youtube example is available in [here](https://youtu.be/KpJRGi1W6fI).
 
 This project is using the dataset from [Kaggle Dataset: 3.4 Million Spotify Google Store Reviews](https://www.kaggle.com/datasets/bwandowando/3-4-million-spotify-google-store-reviews/data). It contains text reviews, ratings, likes, and app_version that can be used for various application.
 
+The embeddings are available to use from activeloop [hub](https:/app.activeloop.ai/haritsahm/spotify_reviews_cleaned_filtered_balanced_50K_docs_1000_chunk), feel free to access and experiment with it without preparing the vector store.
+
 ## Setup
 
 ### Hardware Requirements:
@@ -61,6 +63,10 @@ unzip 3-4-million-spotify-google-store-reviews.zip -d data/
 
 ### 2. Prepare and Generate Vector Store
 
+> Note: I added the publicly available dataset in Activeloop Hub so there's no need to preprocess this data, skip to [2. Download and Save Locally](#2-download-and-save-deep-lake-vector-store-locally). If you want to experiment with different chunk size, filter maximum number of data, or create a local dataset then you can proceed with this step.
+
+### 1. Process dataset manually and save on local
+
 Because the dataset is large and it will need ~1 hour to process the entire dataset, it's better to prepare and store the data before using it.
 
 Follow the instructions from `notebooks/data-exploration.ipynb` and `notebooks/sentence_generator.ipynb`.
@@ -72,6 +78,18 @@ Follow the instructions from `notebooks/data-exploration.ipynb` and `notebooks/s
 # from the root of `va-chatbot-review/`
 jupyter lab
 ```
+
+### 2. Download and save Deep Lake Vector Store Locally.
+
+Deep Lake supports streaming the dataset directly from the cloud store. But this approach depends on the internet speed/bandwidth and may cause a longer response time to our chatbot. The best way is to save the dataset locally and load it at runtime.
+
+This vector store was computed using `chunk_size=1000`, `chunk_overlap=0`, `model=text-embedding-ada-002`, and `max_docs=50000`
+
+```
+python3 utils/download_deeplake_vs.py
+```
+
+The dataset should be available in `deeplake/spotify_reviews_cleaned_filtered_balanced_50K_docs_1000_chunk`
 
 ## Running the application
 

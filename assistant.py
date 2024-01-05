@@ -2,12 +2,15 @@ import logging
 from typing import Any
 
 import streamlit as st
+from langchain import OpenAI
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chains.base import Chain
 from langchain.chat_models import ChatOpenAI
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.memory.chat_memory import BaseChatMemory
+from langchain.retrievers import ContextualCompressionRetriever
+from langchain.retrievers.document_compressors import LLMChainExtractor
 from langchain.vectorstores import DeepLake as DeepLakeVS
 from langchain.vectorstores.base import VectorStoreRetriever
 
@@ -57,9 +60,9 @@ class AssistantBot:
 
         self._retriever = db.as_retriever()
         self._retriever.search_kwargs['distance_metric'] = 'cos'
-        self._retriever.search_kwargs['fetch_k'] = 5
+        self._retriever.search_kwargs['fetch_k'] = 15
         self._retriever.search_kwargs['maximal_marginal_relevance'] = True
-        self._retriever.search_kwargs['k'] = 5
+        self._retriever.search_kwargs['k'] = 15
 
     def update_retriever(self, dataset_path: str) -> bool:
         """Update the current vector store with a new vector store.
@@ -112,11 +115,18 @@ class AssistantBot:
             raise RuntimeError("Retriever or memory aren't valid.")
 
         try:
+            # create compressor for the retriever
+            compressor = LLMChainExtractor.from_llm(OpenAI(model='gpt-3.5-turbo-instruct', temperature=0))
+            compression_retriever = ContextualCompressionRetriever(
+                base_compressor=compressor,
+                base_retriever=self._retriever
+            )
+
             self._chain = ConversationalRetrievalChain.from_llm(
                 llm=ChatOpenAI(model='gpt-3.5-turbo-1106', temperature=0),
                 chain_type='stuff',
                 memory=self._memory,
-                retriever=self._retriever,
+                retriever=compression_retriever,
                 combine_docs_chain_kwargs={
                     'prompt': ASSISTANT_PROMPT_1,
                 },

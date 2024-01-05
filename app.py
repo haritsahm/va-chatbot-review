@@ -4,12 +4,16 @@ Source: https://medium.com/streamlit/how-to-build-an-llm-powered-chatbot-with-st
 Source: https://medium.com/@m.nusret.ozates/unleashing-the-future-of-ai-powered-qa-chatbots-streamlit-langchain-retrieval-qa-chatgpt-53c0dd8876ed
 """
 import os
+import warnings
 
 import streamlit as st
 from dotenv import load_dotenv
 from streamlit_extras.add_vertical_space import add_vertical_space
 
 from assistant import initialize_bot
+
+warnings.simplefilter('ignore', UserWarning)
+
 
 load_dotenv()
 

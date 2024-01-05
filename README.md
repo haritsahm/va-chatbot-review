@@ -63,9 +63,9 @@ unzip 3-4-million-spotify-google-store-reviews.zip -d data/
 
 ### 2. Prepare and Generate Vector Store
 
-> Note: I added the publicly available dataset in Activeloop Hub so there's no need to preprocess this data, skip to [2. Download and Save Locally](#2-download-and-save-deep-lake-vector-store-locally). If you want to experiment with different chunk size, filter maximum number of data, or create a local dataset then you can proceed with this step.
+> Note: I added the publicly available dataset in Activeloop Hub so there's no need to preprocess this data, skip to [2. Download and Save Locally](#b-download-and-save-deep-lake-vector-store-locally). If you want to experiment with different chunk size, filter maximum number of data, or create a local dataset then you can proceed with this step.
 
-### 1. Process dataset manually and save on local
+#### a. Process dataset manually and save on local
 
 Because the dataset is large and it will need ~1 hour to process the entire dataset, it's better to prepare and store the data before using it.
 
@@ -79,7 +79,7 @@ Follow the instructions from `notebooks/data-exploration.ipynb` and `notebooks/s
 jupyter lab
 ```
 
-### 2. Download and save Deep Lake Vector Store Locally.
+#### b. Download and save Deep Lake Vector Store Locally.
 
 Deep Lake supports streaming the dataset directly from the cloud store. But this approach depends on the internet speed/bandwidth and may cause a longer response time to our chatbot. The best way is to save the dataset locally and load it at runtime.
 

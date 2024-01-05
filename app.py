@@ -37,7 +37,10 @@ def initialize_assistant():
     try:
         # Initialize assistance bot and stop if there is an error.
         global BOT
-        dataset_path = os.path.join('deeplake', st.session_state.dataset_path)
+        if st.session_state.dataset_path.startswith('hub://'):
+            dataset_path = st.session_state.dataset_path
+        else:
+            dataset_path = os.path.join('deeplake', st.session_state.dataset_path)
         BOT = initialize_bot(dataset_path=dataset_path)
     except Exception as ex:
         st.error(ex)
@@ -59,7 +62,8 @@ with st.sidebar:
 
     dataset_path = st.selectbox(
         label='Which database do you want to use?',
-        options=os.listdir('deeplake/'),
+        options=os.listdir('deeplake/') +
+        ['hub://haritsahm/spotify_reviews_cleaned_filtered_balanced_50K_docs_1000_chunk'],
         on_change=initialize_assistant,
         key='dataset_path'
     )

@@ -2,11 +2,11 @@ import logging
 from typing import Any
 
 import streamlit as st
-from langchain import OpenAI
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chains.base import Chain
 from langchain.chat_models import ChatOpenAI
 from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.llms import OpenAI
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.memory.chat_memory import BaseChatMemory
 from langchain.retrievers import ContextualCompressionRetriever

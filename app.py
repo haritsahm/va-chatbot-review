@@ -63,7 +63,10 @@ with st.sidebar:
     dataset_path = st.selectbox(
         label='Which database do you want to use?',
         options=os.listdir('deeplake/') +
-        ['hub://haritsahm/spotify_reviews_cleaned_filtered_balanced_50K_docs_1000_chunk'],
+        [
+            'hub://haritsahm/spotify_reviews_cleaned_filtered_balanced_50K_docs_1000_chunk',
+            'hub://haritsahm/spotify_filter_version_ratings_count_balanced_50K_docs_1000_chunk',
+        ],
         on_change=initialize_assistant,
         key='dataset_path'
     )

@@ -10,3 +10,7 @@ torchvision
 transformers
 langchain
 kaggle
+python-dotenv
+openai
+deeplake
+tiktoken
